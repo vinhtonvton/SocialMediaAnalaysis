@@ -1,0 +1,91 @@
+---
+title: "Social Media"
+author: "Vinh Ton"
+date: "2024-07-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+library(iNZightTools)
+library(DescTools)
+
+dataset = read.csv("C:/Users/thela/OneDrive/Desktop/personal projects/social media/Time-Wasters on Social Media.csv")
+categories = colnames(dataset)
+
+#Who is most affected by productivity loss?
+#response variable
+```
+
+This firstreport will primarily be exploratory. In particular, I want to understand how different ages and genders use social media, in regard to variables such as platform, number, scroll rate, etc. That way, in this hypothetical situation, businesses, marketing associates, etc. will understand how best to appeal to certain demographics for their products. First, we explain what all the variables of the given dataset are.
+
+UserID: A unique identifier assigned to each user.
+Age: The age of the user.
+Gender: The gender of the user.
+Location: The geographical location of the user.
+Income: The annual income of the user.
+Debt: Tells If the is in Debt or Not.
+Owns Property: Indicates whether the user owns any property (Yes/No).
+Profession: The profession or job title of the user.
+Demographics: Additional demographic information about the user (Rural or Urban Life).
+Platform: The social media platform used by the user (e.g., Facebook, Instagram, TikTok).
+Total Time Spent: The total time the user has spent on the platform.
+Number of Sessions: The number of sessions the user has had on the platform.
+Video ID: A unique identifier for each video watched.
+Video Category: The category of the video watched (e.g., Entertainment, Gaming, Pranks, Vlog).
+Video Length: The length of the video watched.
+Engagement: The engagement level of the user with the video (e.g., Likes, Comments).
+Importance Score: A score representing the perceived importance of the video to the user.
+Time Spent On Video: The amount of time the user spent watching the video.
+Number of Videos Watched: The total number of videos watched by the user.
+Scroll Rate: The rate at which the user scrolls through content.
+Frequency: How frequently the user logs into the platform.
+Productivity Loss: The amount of productivity lost due to time spent on social media.
+Satisfaction: The satisfaction level of the user with the content consumed.
+Watch Reason: The reason why the user watched the video (e.g., Entertainment, Information).
+DeviceType: The type of device used to access the platform (e.g., Mobile, Desktop).
+OS: The operating system of the device used.
+Watch Time: The specific time of day when the user watched the video.
+Self Control: The user's self-assessed level of self-control while using the platform.
+Addiction Level: The user's self-assessed level of addiction to social media.
+Current Activity: The activity the user was engaged in before using the platform.
+ConnectionType: The type of internet connection used by the user (e.g., Wi-Fi, Mobile Data).
+
+
+
+
+We will begin by cleaning the dataset. We drop all variables that have no relation to either the video type, or the gender or income level of the user This includes:
+- UserID, Video.ID ConnectionType, ProductivityLoss, OS, Owns.Property, Profession, Location, Demographics, Income, Debt
+
+We will additionally drop the variables Addiction.Level, Self.Control, Importance.Score, and Satisfaction, which, as self-assessed variables, does not have an objective or consistent standard with which to measure.
+
+
+```{r}
+cleanedDataset = subset(dataset, select = -c(UserID, Video.ID, ProductivityLoss, OS, ConnectionType, Addiction.Level, Self.Control, Importance.Score, Satisfaction, Profession, Owns.Property, Location, Demographics, Income, Debt))
+cleanedCategories = colnames(cleanedDataset)
+```
+
+This leaves us with 16 remaining variables. This means we will investigate the following demographics:
+
+Age, Gender
+
+We will understand how these demographics consume social media in regard to the remaining variables:
+
+Total.Time.Spent, Engagement, Frequency, CurrentActivity, Number.of.Sessions, Time.Spent.On.Video, Watch.Reason, Video.Category, Number.Of.Videos.Watched, DeviceType, Platform, Video.Length, Scroll.Rate, and Watch.Time.
+
+
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+Dataset from:
+https://www.kaggle.com/datasets/muhammadroshaanriaz/time-wasters-on-social-media
+
+Future report: For this report, I have decided to focus on productivity loss; specifically, I want to investigate who is most affected by it in terms of demographic information, such as age, gender, income, etc. Is there any significant correlation between productivity loss and one of these categories? Is it possible to predict the productivity loss of a person based off of their demographic issues?
